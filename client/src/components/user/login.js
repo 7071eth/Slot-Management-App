@@ -1,10 +1,13 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import instance from "../../connections/axios";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 function LoginUser() {
+  
+  const [userErr,setUserErr] = useState('');
   const schema = yup.object({
     name: yup.string().required("Name is a required field"),
     password: yup
@@ -39,9 +42,11 @@ function LoginUser() {
         localStorage.setItem("authToken", jwt);
         localStorage.setItem("user", JSON.stringify(response.data));
         console.log("WOrking");
-        Navigate("/");
+        Navigate("/dashboard");
       }
     } catch (err) {
+
+      setUserErr("Invalid credentials")
       console.log(err);
     }
   };
@@ -56,18 +61,26 @@ function LoginUser() {
           <h2 className="text-4xl dark:text-white font-bold text-cente">
             SIGN IN
           </h2>
+          <span className="error-message">{userErr}</span>
           <div className="flex flex-col text-gray-400 py-2">
             <label>User Name</label>
             <input
+              onClick={()=>{
+                setUserErr('')
+              }}
               {...register("name", { minLength: 3 })}
               className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
               type="text"
             />
             <span className="error-message">{errors.name?.message}</span>
+            
           </div>
           <div className="flex flex-col text-gray-400 py-2">
             <label>Password</label>
             <input
+            onClick={()=>{
+              setUserErr('')
+            }}
               {...register("password", { minLength: 6 })}
               className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
               type="password"
@@ -84,6 +97,7 @@ function LoginUser() {
           <button className="w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/15 hover:shadow-teal-500/30 text-white font-semibold rounded-lg">
             Sign In
           </button>
+          
         </form>
       </div>
     </Fragment>

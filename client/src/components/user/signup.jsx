@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import instance from "../../connections/axios";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import '../../assets/user/signup.css';
+import '../../assets/user/style.css';
 const schema = yup.object({
     name:yup.string().required("Name is a required field"),
     email:yup.string().required("Email is a required field").email("Email is not valid"),

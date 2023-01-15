@@ -1,0 +1,14 @@
+.error-message {
+    @apply  text-red-700 text-sm  ;
+  }
+
+
+
+.link {
+  @apply bg-gray-800 flex rounded-md mb-3 p-2 cursor-pointer hover:bg-gray-600 text-gray-400 text-sm items-center gap-x-4
+
+}
+
+.active {
+  @apply bg-gray-600 flex rounded-md p-2 cursor-pointer hover:bg-gray-700 text-gray-400 text-sm items-center gap-x-4
+}

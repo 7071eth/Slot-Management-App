@@ -1,24 +1,22 @@
 import React from 'react'
 import { useState } from 'react';
 import imgi from '../../assets/user/icons/control.png'
+import setting from '../../assets/user/icons/Setting.png'
+import calender from '../../assets/user/icons/Calendar.png'
+import { NavLink } from 'react-router-dom';
+import '../../assets/user/style.css';
 function Sidebar() {
 
     const [open, setOpen] = useState(true);
     const Menus = [
-      { title: "Dashboard", src: "Chart_fill" },
-      { title: "Inbox", src: "Chat" },
-      { title: "Accounts", src: "User", gap: true },
-      { title: "Schedule ", src: "Calendar" },
-      { title: "Search", src: "Search" },
-      { title: "Analytics", src: "Chart" },
-      { title: "Files ", src: "Folder", gap: true },
-      { title: "Setting", src: "Setting" },
+      { title: "Dashboard", src: setting },
+      { title: "Booking", src: calender },
     ];
   return (
     <div
         className={` ${
           open ? "w-72" : "w-20 "
-        } bg-gray-900 h-screen p-5  pt-8 relative duration-300`}
+        } bg-gray-900 h-screen p-5 pt-8 relative duration-300`}
        >
         
         
@@ -29,36 +27,23 @@ function Sidebar() {
            border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
-        <div className="flex gap-x-4 items-center">
-          <img
-            src="./src/assets/logo.png"
-            className={`cursor-pointer duration-500 ${
-              open && "rotate-[360deg]"
-            }`}
-          />
-          <h1
-            className={`text-white origin-left font-medium text-xl duration-200 ${
-              !open && "scale-0"
-            }`}
-          >
-            Designer
-          </h1>
-        </div>
+        
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
+            <nav>
+            <NavLink exact to={`/${Menu.title}`} className="link" activeClassName="active">
             <li
               key={index}
-              className={`flex  rounded-md p-2 cursor-pointer hover:bg-gray-700 text-gray-400 text-sm items-center gap-x-4 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                index === 0 && "bg-gray-700"
-              } `}
+              className={'flex place-items-center'}
             >   
                 
-              <img src={`../../assets/user/icons/${Menu.src}.png`} />
-              <span className={`${!open && "hidden"} origin-left duration-200`}>
+              <img src={Menu.src} />
+              <span className={`${!open && "hidden"} origin-left duration-200 ml-4 font-semibold`}>
                 {Menu.title}
               </span>
             </li>
+            </NavLink>
+            </nav>
           ))}
         </ul>
       </div>
