@@ -5,7 +5,7 @@ import * as yup from "yup";
 import instance from "../../connections/axios";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-function LoginUser() {
+function AdminLogin() {
   
   const [userErr,setUserErr] = useState('');
   const schema = yup.object({
@@ -30,19 +30,19 @@ function LoginUser() {
     try {
       const response = await instance({
         method: "POST",
-        url: "/login",
+        url: "/admin/login",
         data: values,
       });
-      console.log("hwew");
+      
 
       console.log(response.data);
       if (response.data) {
         let jwt = response.data.accessToken;
         let refreshToken = response.data.refreshToken;
         localStorage.setItem("authToken", jwt);
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("admin", JSON.stringify(response.data));
         console.log("WOrking");
-        Navigate("/dashboard");
+        Navigate("/admin/requests");
       }
     } catch (err) {
 
@@ -59,11 +59,11 @@ function LoginUser() {
           className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg"
         >
           <h2 className="text-4xl dark:text-white font-bold text-cente">
-            SIGN IN
+            Admin Login
           </h2>
           <span className="error-message">{userErr}</span>
           <div className="flex flex-col text-gray-400 py-2">
-            <label>User Name</label>
+            <label>Name</label>
             <input
               onClick={()=>{
                 setUserErr('')
@@ -104,4 +104,4 @@ function LoginUser() {
   );
 }
 
-export default LoginUser;
+export default AdminLogin;

@@ -100,7 +100,12 @@ function SignupUser() {
           <button className="w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/15 hover:shadow-teal-500/30 text-white font-semibold rounded-lg">
             Register
           </button>
+          
+          <div className="w-full flex justify-center">
+           <span className="text-blue-400">Already a member?</span> <a href="/login" className="pl-2 underline text-white cursor">Login</a>
+          </div>
         </form>
+        
       </div>
     </Fragment>
   );

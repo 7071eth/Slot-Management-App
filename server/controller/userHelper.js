@@ -1,4 +1,5 @@
 const User = require('../model/User').user_data;
+const Slotrequest = require('../model/User').slotrequest;
 const RefreshToken = require('../model/User').refresh_token;
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
@@ -11,9 +12,8 @@ const generateRefreshToken = (user)=>{
   return jwt.sign({id: user.id},process.env.REFRESH_KEY);
 }
 
-
 const Register = async (req,res) => {
-  console.log(req.body);
+  
   const {name,password,email} = req.body;
 
   if(!name || !password) return res.status(400).json({'message':'Username and password are required'})
@@ -109,4 +109,47 @@ const Refresh = async (req,res)=>{
   //If everything is ok, create new access token, refresh token and send to user
 }
 
-module.exports = {Register,Login,Refresh};
+const Request = async (req,res)=>{
+  const {name,email,company,city,phone,zip,user} = req.body;
+  console.log(req.body);
+  if(!name || !email || !city || !company || !phone || !zip) return res.status(400).json({'message':'Wrong inputs'})
+  
+  try {
+
+    const result = await Slotrequest.create({
+      "name": name,
+      "email":email,
+      "company": company,
+      "city":city,
+      "phone":phone,
+      "zip":zip,
+      "status":"Pending",
+      "userid":user
+    })
+
+    console.log(result);
+    res.status(201).json({'success':`Request submitted!`})
+
+  } catch {
+
+  }
+}
+const getRequest = async (req,res)=>{
+  const user = req.query.userid;
+  
+  try {
+
+   
+    const userId = await User.findOne({_id: user}).exec();
+    const slotrequest = await Slotrequest.findOne({userid:user}).exec()
+    console.log(userId)
+    res.status(201).json({
+     userId,slotrequest
+    })
+
+  } catch (err) {
+    console.log(err);
+    res.status(404);
+  }
+}
+module.exports = {Register,Login,Refresh,Request,getRequest};

@@ -1,14 +1,11 @@
 import React from 'react'
-import { useNavigate } from 'react-router';
-
+import { useNavigate } from "react-router-dom";
 function Navbar() {
   const Navigate = useNavigate();
-
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    Navigate('/login')
+    localStorage.removeItem("admin");
+    Navigate('/admin/signin')
   }
-
   return (
     <div className='shadow-md shadow-teal-500 w-full '>
        <div className='md:flex justify-between bg-gray-800 py-4 md:px-10 px-7'>

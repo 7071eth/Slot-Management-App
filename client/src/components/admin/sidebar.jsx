@@ -1,16 +1,18 @@
 import React from 'react'
 import { useState } from 'react';
 import imgi from '../../assets/user/icons/control.png'
-import setting from '../../assets/user/icons/Setting.png'
+import chat from '../../assets/user/icons/Chat.png'
 import calender from '../../assets/user/icons/Calendar.png'
+import chart from '../../assets/user/icons/Chart.png'
 import { NavLink } from 'react-router-dom';
 import '../../assets/user/style.css';
 function Sidebar() {
 
     const [open, setOpen] = useState(true);
     const Menus = [
-      { title: "Dashboard", src: setting },
-      
+      { title: "Requests", src: chat },
+      { title: "ApprovedList", src: calender },
+      { title: "RejectedList", src: chart },
     ];
   return (
     <div
@@ -31,7 +33,7 @@ function Sidebar() {
         <ul className="pt-6">
           {Menus.map((Menu, index) => (
             <nav>
-            <NavLink exact to={`/${Menu.title}`} className="link" activeClassName="active">
+            <NavLink exact to={`/admin/${Menu.title}`} className="link" activeClassName="active">
             <li
               key={index}
               className={'flex place-items-center'}

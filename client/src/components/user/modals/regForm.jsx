@@ -2,32 +2,48 @@ import React, { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+import instance from "../../../connections/axios";
+import { json, useNavigate } from "react-router-dom";
 const schema = yup.object({
   name: yup.string().required("* required field"),
-  email: yup
+  email: yup.string().required("* required field").email("Email is not valid"),
+  company: yup
     .string()
     .required("* required field")
-    .email("Email is not valid"),
-  comapany: yup.string().required("Company is a required field").length(3,"Min 3 char required"),
-  city: yup.string().required("* required field").min(3,"Min 3 char required"),
-  phone: yup.string().required("* required field").min(10,"Invalid number"),
-  zip: yup.string().required("* required field").min(6,"Invalid zip code"),
+    .min(3, "Min 3 char required"),
+  city: yup.string().required("* required field").min(3, "Min 3 char required"),
+  phone: yup.string().required("* required field").min(10, "Invalid number"),
+  zip: yup.string().required("* required field").min(6, "Invalid zip code"),
 });
-function RegForm() {
+function RegForm({setRegModal}) {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     
-    console.log(values);
+    const user = JSON.parse(localStorage.getItem("user")).userId;
+    values.user = user;
+    console.log(user);
+    try {
+      const response = await instance({
+        method: "POST",
+        url: "/request",
+        data: values,
+      });
+      console.log(response.data.success);
+      console.log(setRegModal(false));
+      navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <div className="transition rounded-lg bg-zinc-600 opacity-90 fixed inset-0 z-50 flex justify-center items-center ">
+    <div className="bg-[#343434ed] fixed top-0 left-0 h-screen w-screen flex items-center justify-center bg-blur-primary z-50 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
         class="text-base w-full max-w-lg bg-white p-5 rounded-lg opacity-100"
@@ -45,6 +61,7 @@ function RegForm() {
               class="appearance-none  block h-6 w-full bg-gray-200 text-gray-700 border rounded py-3 px-4  leading-tight  focus:border-gray-500 focus:outline-none focus:bg-white"
               id="grid-first-name"
               type="text"
+              name="name"
             />
             <span className="error-message">{errors.name?.message}</span>
           </div>
@@ -61,6 +78,7 @@ function RegForm() {
               class="h-6 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-last-name"
               type="email"
+              name="email"
             />
             <span className="error-message">{errors.email?.message}</span>
           </div>
@@ -78,6 +96,7 @@ function RegForm() {
               class="h-6 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-password"
               type="text"
+              name="company"
             />
             <span className="error-message">{errors.company?.message}</span>
           </div>
@@ -95,6 +114,7 @@ function RegForm() {
               class="h-6 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-city"
               type="text"
+              name="city"
             />
             <span className="error-message">{errors.city?.message}</span>
           </div>
@@ -110,6 +130,7 @@ function RegForm() {
               class="h-6 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-city"
               type="text"
+              name="phone"
             />
             <span className="error-message">{errors.phone?.message}</span>
           </div>
@@ -126,6 +147,7 @@ function RegForm() {
               class="h-6 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-zip"
               type="text"
+              name="zip"
             />
             <span className="error-message">{errors.zip?.message}</span>
           </div>
@@ -136,6 +158,9 @@ function RegForm() {
           </button>
         </div>
       </form>
+      <button onClick={()=>{
+            setRegModal(false)
+        }} className="bg-gray-900 p-2 rounded-md text-base text-red-500 absolute bottom-10 px-5">Close</button>
     </div>
   );
 }

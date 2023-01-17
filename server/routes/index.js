@@ -26,6 +26,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup',userHelper.Register)
+router.post('/request',userHelper.Request)
+router.get('/getrequest',userHelper.getRequest)
 router.post('/login',userHelper.Login)
 router.post('/refresh',userHelper.Refresh)
 module.exports = router;
