@@ -29,7 +29,7 @@ function AdminDashboard() {
       if (result) setEmpty(false);
       settabledata(requests);
     });
-  }, [reload]);
+  }, [setreload]);
 
   return (
     <div>
