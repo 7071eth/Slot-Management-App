@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import instance from "../../../connections/axios";
 
-function SelectSlot({ slot,slotnumber,tabledata }) {
+function SelectSlot({ setslot,slotnumber,tabledata }) {
   const [name,setname]=useState('')
   const [errmsg,seterr]=useState('')
   const config={Headers:{
@@ -11,7 +11,7 @@ function SelectSlot({ slot,slotnumber,tabledata }) {
   }}
   const handleCancelClick = () => {
 
-    slot(false);
+    setslot(false);
   };
   
 
@@ -31,10 +31,12 @@ const handleSave = () => {
   {
     instance.post(`/admin/bookslot `,{name,slotnumber},config).then(()=>
     {
-      slot(false);
+      setslot(false);
+      alert("Saved")
+
     }).catch((err)=>
     {
-   
+      console.log(err)
     })
   
 

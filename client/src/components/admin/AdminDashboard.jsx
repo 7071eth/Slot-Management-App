@@ -24,18 +24,19 @@ function AdminDashboard() {
     }).then((data) => {
       let requests = data.data.user;
       let key = "status";
-      let value = "pending";
-      let result = requests.find((obj) => obj[key] === value);
+      let value = "accepted";
+            let result = requests.find((obj) => obj[key] === value);
       if (result) setEmpty(false);
       settabledata(requests);
     });
-  }, [setreload]);
+  }, [reload]);
 
   return (
     <div>
       <div className="mt-5 pl-2 uppercase text-xll text-white text">
         <h1>Requests</h1>
       </div>
+
       <div class="relative w-9/12 mt-5 overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -118,6 +119,7 @@ function AdminDashboard() {
                         <button
                           onClick={() => {
                             accept(val._id);
+                            
                           }}
                           className="mr-3 
                      bg-green-400 p-1 px-3 rounded-lg text-black"
@@ -140,11 +142,12 @@ function AdminDashboard() {
               })}
           </tbody>
         </table>
-      </div>
-
-      <div className="flex justify-center text-white">
+        <div className="flex justify-center  text-white">
         {empty ? <div className="m-9">New requests not found !</div> : ""}
       </div>
+      </div>
+
+      
     </div>
   );
 }

@@ -131,9 +131,9 @@ function RejectedList() {
               })}
           </tbody>
         </table>
-      </div>
-      <div className="flex justify-center text-white">
+      <div className="flex justify-center  text-white">
         {empty ? <div className="m-9">New requests not found !</div> : ""}
+      </div>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ useEffect(() => {
 
   })
   
-},[tabledata])
+},[])
  
   return (
     <Fragment>

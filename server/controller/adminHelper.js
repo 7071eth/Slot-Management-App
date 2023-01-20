@@ -86,12 +86,14 @@ const Accept = async (req, res) => {
   }
 };
 const Bookslot = async (req, res) => {
+  console.log('gddad');
  console.log(req.body);
 
  try{
   const user = await Slotrequest.updateOne({_id:req.body.name},{seat:req.body.slotnumber},(e,s)=>{
     console.log(s);
-  })
+    console.log("Working");
+  }).clone()
 console.log(user);
 res.status(200).json({
   user

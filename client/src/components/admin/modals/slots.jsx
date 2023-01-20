@@ -92,9 +92,10 @@ function Assign({setRegModal,setModal}) {
       </div>
       {selectslot && (
           <SelectSlot
-            slot={setslot}
+          setslot={setslot}
             slotnumber={slotnummber}
             tabledata={tabledata}
+            
           />
         )}
 
