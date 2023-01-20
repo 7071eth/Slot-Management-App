@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import instance from "../../../connections/axios";
-
+import { SelectContext } from "../store/context";
 function SelectSlot({ setslot,slotnumber,tabledata }) {
   const [name,setname]=useState('')
   const [errmsg,seterr]=useState('')
+  const {modal,setModal} = useContext(SelectContext);
   const config={Headers:{
   'content-type':"application/json"
   }}
@@ -32,6 +33,7 @@ const handleSave = () => {
     instance.post(`/admin/bookslot `,{name,slotnumber},config).then(()=>
     {
       setslot(false);
+      setModal(false);
       alert("Saved")
 
     }).catch((err)=>
@@ -48,6 +50,7 @@ seterr('select name to assign')
 useEffect(()=>
 {
 seterr('')
+console.log(name);
 
 },[name])
 

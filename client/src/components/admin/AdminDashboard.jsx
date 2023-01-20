@@ -12,6 +12,7 @@ function AdminDashboard() {
     instance.get(`/admin/acceptrequest?userid=${id}`);
     setreload(!reload);
   };
+  
   const reject = (id) => {
     instance.get(`/admin/rejectrequest?userid=${id}`);
     setreload(!reload);

@@ -1,14 +1,17 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect,useContext } from 'react'
 import instance from '../../connections/axios'
 import { useState } from 'react';
 import Assign from './modals/slots';
 import SelectSlot from './modals/SelectSlot';
+import { SelectContext } from './store/context';
+
 function ApprovedList() {
     const [tabledata, settabledata] = useState([]);
     const [reload,setreload] = useState(true)
-    const [modal,setModal] = useState(false);
+ 
     const [empty, setEmpty] = useState(true);
+    const {modal,setModal} = useContext(SelectContext);
     const accept = (id) => {
         instance.get(`/admin/acceptrequest?userid=${id}`);
       setreload(!reload);

@@ -2,11 +2,13 @@ import React, { Fragment } from "react";
 import instance from "../../../connections/axios";
 import { json, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect,useContext } from "react";
 import SelectSlot from "./SelectSlot";
-function Assign({setRegModal,setModal}) {
+import { SelectContext } from "../store/context";
+
+function Assign({setRegModal}) {
   const navigate = useNavigate();
-  
+  const {modal,setModal} = useContext(SelectContext);
   const [tabledata, settabledata] = useState([]);
   const [slotnummber, setslotnumber] = useState(0);
   const [selectslot, setslot] = useState(false);
